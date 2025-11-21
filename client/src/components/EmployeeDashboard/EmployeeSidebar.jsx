@@ -11,9 +11,8 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 
 const EmployeeSidebar = () => {
-  const { user, loading } = useAuth();
+const { user, loading } = useAuth();
 
-  // ⛔ Prevent crash before user loads
   if (loading || !user) return null;
 
   const menuItems = [
