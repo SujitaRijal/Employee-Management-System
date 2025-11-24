@@ -77,7 +77,7 @@ const AdminSidebar = () => {
     { path: "/admin-dashboard", icon: <FaTachometerAlt />, label: "Dashboard" },
     { path: "/admin-dashboard/employees", icon: <FaUsers />, label: "Employees" },
     { path: "/admin-dashboard/departments", icon: <FaBuilding />, label: "Departments" },
-    { path: "/admin-dashboard/leaves/", icon: <FaCalendar />, label: "Leaves" },
+    { path: "/admin-dashboard/leaves", icon: <FaCalendar />, label: "Leaves" },
     { path: "/admin-dashboard/salary/add", icon: <FaMoneyBillWave />, label: "Salary" },
     { path: "/admin-dashboard/settings", icon: <FaCogs />, label: "Settings" },
   ];
