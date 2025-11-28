@@ -21,6 +21,8 @@ import LeaveListView from './components/leave/LeaveListView.jsx'
 import AddLeave from './components/leave/AddLeave.jsx'
 import Setting from './components/EmployeeDashboard/Setting.jsx'
 import LeaveDetail from './components/leave/LeaveDetail.jsx'
+import Attendance from './components/attendance/Attendance.jsx'
+import AttendanceReport from './components/attendance/AttendanceReport.jsx'
 
 
 
@@ -57,6 +59,12 @@ const App = () => {
             <Route path='employees/leaves/:id' element={<LeaveListView />}></Route>
 
             <Route path='settings' element={<Setting/>}></Route>
+
+            <Route path='attendance' element={<Attendance/>}></Route>
+
+            <Route path='attendance-report' element={<AttendanceReport/>}></Route>
+
+
 
 
         </Route>
