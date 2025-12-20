@@ -6,6 +6,7 @@ import { useAuth } from "../context/authContext.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -15,6 +16,15 @@ const Login = () => {
   const [touched, setTouched] = useState({});
   const [RememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgot,setShowForgot]=useState(false);
+  const [otpSent,setOtpSent]=useState(false);
+
+  const [resetForm,setResetForm]=useState({
+    email:"",
+    otp:"",
+    newPassword:"",
+    confirmPassword:""
+  });
   const { login } = useAuth();
 
   const navigate = useNavigate();
@@ -99,6 +109,65 @@ const Login = () => {
     }
   };
 
+  const handleSendOtp=async()=>{
+    if(!resetForm.email){
+      toast.error("Please enter your email")
+      return;
+    }
+    try {
+      const res=await axios.post("http://localhost:4000/api/auth/send-reset-otp",
+        {email:resetForm.email}
+      );
+      if(res.data.success)
+
+        {
+          toast.success("OTP sent to your email");
+          setOtpSent(true);
+        }else{
+          toast.error(res.data.message)
+        }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error sending OTP")
+      
+    }
+  };
+
+  const handleResetPassword=async(req,res)=>{
+    const {email,otp,newPassword,confirmPassword}=resetForm;
+    if(!email || !otp || !newPassword || !confirmPassword){
+      toast.error("All fields are required");
+      return;
+    }
+    if(newPassword !== confirmPassword){
+      toast.error("Password do not match")
+      return;
+    }
+    try {
+      const res=await axios.post("http://localhost:4000/api/auth/reset-password",
+        {
+          email,otp,newPassword
+        }
+      );
+      if(res.data.success)
+      {
+        toast.success("Password reset successfull");
+        setShowForgot(false);
+        setOtpSent(false);
+
+        setResetForm({
+          email:"",
+          otp:"",
+          newPassword:"",
+          confirmPassword:""
+        })
+      }else{
+        toast.error(res.data.message)
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Reset Failed")
+      
+    }
+  }
   return (
     <div className="min-h-screen w-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-8">
       <ToastContainer position="top-right" autoClose={3000} />
@@ -203,7 +272,11 @@ const Login = () => {
               </label>
               <a
                 href="#"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowForgot(true)
+                }
+                }
                 className="text-sm font-medium text-blue-600 hover:text-purple-600 transition-colors duration-200 hover:underline"
               >
                 Forgot Password?
@@ -217,6 +290,94 @@ const Login = () => {
             >
               Sign In
             </button>
+
+          {showForgot && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div className="relative w-[90%] max-w-md bg-white rounded-2xl p-6 shadow-2xl animate-fadeIn">
+
+      {/* Close button */}
+      <button
+        onClick={() => {
+          setShowForgot(false);
+          setOtpSent(false);
+        }}
+        className="absolute top-3 right-4 text-gray-400 hover:text-red-500 text-xl"
+      >
+        ✕
+      </button>
+
+      {/* Heading */}
+      <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">
+        Reset Password
+      </h3>
+
+      {/* Email */}
+      <input
+        type="email"
+        placeholder="Enter your email"
+        value={resetForm.email}
+        onChange={(e) =>
+          setResetForm({ ...resetForm, email: e.target.value })
+        }
+        className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-blue-500 outline-none"
+      />
+
+      {/* Send OTP Button */}
+      {!otpSent && (
+        <button
+          onClick={handleSendOtp}
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:scale-[1.02] transition-all"
+        >
+          Send OTP
+        </button>
+      )}
+
+      {/* OTP + New Password */}
+      {otpSent && (
+        <>
+          <input
+            type="text"
+            placeholder="Enter OTP"
+            value={resetForm.otp}
+            onChange={(e) =>
+              setResetForm({ ...resetForm, otp: e.target.value })
+            }
+            className="w-full p-3 border border-gray-300 rounded-lg my-3"
+          />
+
+          <input
+            type="password"
+            placeholder="New password"
+            value={resetForm.newPassword}
+            onChange={(e) =>
+              setResetForm({ ...resetForm, newPassword: e.target.value })
+            }
+            className="w-full p-3 border border-gray-300 rounded-lg mb-3"
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm password"
+            value={resetForm.confirmPassword}
+            onChange={(e) =>
+              setResetForm({ ...resetForm, confirmPassword: e.target.value })
+            }
+            className="w-full p-3 border border-gray-300 rounded-lg mb-4"
+          />
+
+          <button
+            onClick={handleResetPassword}
+            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:scale-[1.02] transition-all"
+          >
+            Reset Password
+          </button>
+        </>
+      )}
+    </div>
+  </div>
+)}
+
+
 
             {/* Divider */}
             {/* <div className="relative my-6">
