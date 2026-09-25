@@ -16,7 +16,7 @@ import dashboardRouter from './routes/dashboard.js'
 
 
 const app=express();
-// const port=process.env.PORT || 4000;
+const port=process.env.PORT || 4000;
 connectDB();
 
 app.use(express.json());
@@ -40,6 +40,5 @@ app.use('/api/attendance',attendanceRouter)
 app.use('/api/dashboard',dashboardRouter)
 
 
-// app.listen(port, ()=>console.log(`Server is running on port ${port}`));
+app.listen(port, ()=>console.log(`Server is running on port ${port}`));
 
-export default app;
