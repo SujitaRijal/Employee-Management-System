@@ -131,7 +131,7 @@ Create an admin account in MongoDB or use an existing account according to your 
 * Mongoose
 * JWT Authentication
 * Nodemailer
-* Cloudinary
+
 
 ---
 
