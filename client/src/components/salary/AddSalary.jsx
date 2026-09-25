@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchDepartments, getEmployees } from "../../utils/EmployeeHelper.jsx";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../utils/api.js";
 
 
 const AddSalary = () => {
@@ -53,8 +53,8 @@ const handleDepartment=async(e)=>{
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `http://localhost:4000/api/salary/add`,
+      const response = await api.post(
+        `/api/salary/add`,
         salary,
         {
           headers: {

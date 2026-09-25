@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import DataTable from 'react-data-table-component';
 import { columns, DepartmentButtons } from '../../utils/DepartmentHelper.jsx';
 import { useEffect } from 'react';
-import axios from 'axios';
+import api from '../../utils/api.js';
 import { customStyles } from '../../utils/DepartmentHelper.jsx';
 
 
@@ -21,7 +21,7 @@ const DepartmentList = () => {
   const fetchDepartments=async()=>{
       setDeploading(true);
       try{
-       const response =await axios.get("http://localhost:4000/api/department",{
+       const response =await api.get("/api/department",{
         headers:{
           "Authorization":`Bearer ${localStorage.getItem("token") }`
         }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "./api";
 
 
 export const customStyles = {
@@ -37,8 +37,8 @@ export const DepartmentButtons = ({ _id, onDepartmentDelete }) => {
     );
     if (confirm) {
       try {
-        const response = await axios.delete(
-          `http://localhost:4000/api/department/${id}`,
+        const response = await api.delete(
+          `/api/department/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

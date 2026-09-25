@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SummaryCard from "./SummaryCard";
-import axios from 'axios';
+import api from "../../utils/api";
 import {
   FaBuilding,
   FaCheckCircle,
@@ -19,7 +19,7 @@ const AdminSummary = () => {
   useEffect(()=>{
     const  fetchSummary=async()=>{
       try {
-        const summary=await axios.get('http://localhost:4000/api/dashboard/summary',{
+        const summary=await api.get('/api/dashboard/summary',{
           headers:{
             "Authorization":`Bearer ${localStorage.getItem('token')}`
           }

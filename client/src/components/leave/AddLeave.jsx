@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../../utils/api';
 
 
 const AddLeave = () => {
@@ -23,8 +23,8 @@ const AddLeave = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
           try {
-        const response = await axios.post(
-          `http://localhost:4000/api/leave/add`,
+        const response = await api.post(
+          `/api/leave/add`,
           leave,
           {
             headers: {

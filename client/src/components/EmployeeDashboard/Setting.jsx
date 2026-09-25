@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/authContext.jsx';
-import axios from 'axios';
+import api from '../../utils/api.js';
+
+
 
 const Setting = () => {
     const navigate=useNavigate();
@@ -26,7 +28,7 @@ const Setting = () => {
             setError("Password not matched");
         }else{
             try{
-                const response=await axios.put("http://localhost:4000/api/setting/change-password",
+                const response=await api.put("/api/setting/change-password",
                     setting,{
                         headers:{
                             Authorization:`Bearer ${localStorage.getItem("token")}`

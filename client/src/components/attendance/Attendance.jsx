@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {useState,  useEffect } from 'react';
 import { columns, AttendanceHelper } from '../../utils/AttendanceHelper.jsx';
-import axios from 'axios';
 import DataTable from 'react-data-table-component'; 
 import { customStyles } from '../../utils/EmployeeHelper';
+import api from '../../utils/api.js';
 
 const Attendance = () => {
     const [attendance,setAttendance]=useState([]);
@@ -18,7 +18,7 @@ const Attendance = () => {
      const fetchAttendance=async()=>{
           setLoading(true);
           try{
-           const response =await axios.get("http://localhost:4000/api/attendance",{
+           const response =await api.get("/api/attendance",{
             headers:{
               Authorization:`Bearer ${localStorage.getItem("token") }`
             }

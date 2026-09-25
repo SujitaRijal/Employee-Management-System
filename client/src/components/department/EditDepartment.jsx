@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import api from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 
 const EditDepartment = () => {
@@ -13,8 +13,8 @@ const EditDepartment = () => {
     const fetchDepartments = async () => {
       setDeploading(true);
       try {
-        const response = await axios.get(
-          `http://localhost:4000/api/department/${id}`,
+        const response = await api.get(
+          `/api/department/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,7 +43,7 @@ const EditDepartment = () => {
   const handleSubmit=async(e)=>{
     e.preventDefault()
     try {
-    const response=await axios.put(`http://localhost:4000/api/department/${id}`,department,{
+    const response=await api.put(`/api/department/${id}`,department,{
         headers:{
             "Authorization":`Bearer ${localStorage.getItem("token") }`
         }

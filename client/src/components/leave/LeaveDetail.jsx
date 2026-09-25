@@ -1,9 +1,9 @@
-import React, { use } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../utils/api";
 
 const LeaveDetail = () => {
   const { id } = useParams();
@@ -13,8 +13,8 @@ const LeaveDetail = () => {
   useEffect(() => {
     const fetchLeave = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/api/leave/detail/${id}`,
+        const response = await api.get(
+          `/api/leave/detail/${id}`,
 
           {
             headers: {
@@ -36,8 +36,8 @@ const LeaveDetail = () => {
   }, []);
    const changeStatus=async(id,status)=>{
        try {
-        const response = await axios.put(
-          `http://localhost:4000/api/leave/${id}`,
+        const response = await api.put(
+          `/api/leave/${id}`,
           {status},
 
           {
@@ -97,7 +97,7 @@ const LeaveDetail = () => {
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
                   <div className="relative">
                     <img
-                      src={`http://localhost:4000/${leave.employeeId.userId.profileImage}`}
+                      src={`${import.meta.env.VITE_API_URL}/${leave.employeeId.userId.profileImage}`}
                       className="w-36 h-36 rounded-lg border-4 border-white shadow-xl object-cover"
                       alt="Employee"
                     />

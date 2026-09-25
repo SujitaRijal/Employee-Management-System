@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {useState,  useEffect } from 'react';
 import { columns, EmployeeButtons } from '../../utils/EmployeeHelper';
-import axios from 'axios';
+import api from '../../utils/api';
 import DataTable from 'react-data-table-component'; 
 import { customStyles } from '../../utils/EmployeeHelper';
 
@@ -15,7 +15,7 @@ const EmployeeList = () => {
         const fetchEmployees=async()=>{
           setEmpLoading(true);
           try{
-           const response =await axios.get("http://localhost:4000/api/employee",{
+           const response =await api.get("/api/employee",{
             headers:{
               "Authorization":`Bearer ${localStorage.getItem("token") }`
             }
@@ -29,7 +29,7 @@ const EmployeeList = () => {
                   dep_name:emp.department.dep_name,
                   name: emp.userId.name,
                   dob:new Date (emp.dob).toLocaleDateString(),
-                  profileImage: <img width={40} height={40} className="rounded-full" src={`http://localhost:4000/${emp.userId.profileImage}`} />,
+                  profileImage: <img width={40} height={40} className="rounded-full" src={`${import.meta.env.VITE_API_URL}/${emp.userId.profileImage}`} />,
                   action:(<EmployeeButtons _id={emp._id} />),
     
                 }

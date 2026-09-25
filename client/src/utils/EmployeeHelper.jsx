@@ -1,6 +1,7 @@
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import api from "./api";
 
 
 export const customStyles = {
@@ -55,7 +56,7 @@ export const fetchDepartments = async () => {
   let departments = [];
 
   try {
-    const response = await axios.get("http://localhost:4000/api/department", {
+    const response = await api.get("/api/department", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -80,7 +81,7 @@ export const getEmployees = async (id) => {
   let employees = [];
 
   try {
-    const response = await axios.get(`http://localhost:4000/api/employee/department/${id}`, {
+    const response = await api.get(`/api/employee/department/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
